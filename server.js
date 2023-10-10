@@ -1,12 +1,13 @@
 import express from "express";
 const app = express();
+import "dotenv/config";
+import productRouter from "./routes/productRoutes.js";
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Done",
-  });
-});
+const PORT = process.env.PORT;
 
-app.listen(3000, () =>
-  console.log(`The app is hosted on http://localhost:3000`)
+//Middleware
+app.use("/api/products", productRouter);
+
+app.listen(PORT, () =>
+  console.log(`The app is hosted on http://localhost:${PORT}`)
 );
