@@ -52,3 +52,26 @@ export const addNewProducts = async (req, res) => {
     });
   }
 };
+
+export const getParticularProduct = async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.id });
+    if (!product) {
+      res.status(400);
+      throw new Error("Product Not Found");
+    }
+    res.status(200).json({
+      status: "SUCCESS",
+      data: {
+        product,
+      },
+    });
+  } catch (error) {
+    res.json({
+      status: error.message === "Product Not Found" ? `FAIL` : `ERROR`,
+      data: {
+        message: error.message,
+      },
+    });
+  }
+};
