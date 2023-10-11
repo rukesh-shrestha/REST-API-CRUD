@@ -109,3 +109,29 @@ export const updateParticularData = async (req, res) => {
     });
   }
 };
+
+export const deleteParticularProduct = async (req, res) => {
+  try {
+    const data = await Product.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (data) {
+      res.status(200).json({
+        status: "SUCCESS",
+        data: {
+          message: "Deleted",
+        },
+      });
+    } else {
+      res.status(404);
+      throw new Error("Data Not Found");
+    }
+  } catch (error) {
+    res.json({
+      status: error.message === "Data Not Found" ? `FAIL` : `ERROR`,
+      data: {
+        message: error.message,
+      },
+    });
+  }
+};

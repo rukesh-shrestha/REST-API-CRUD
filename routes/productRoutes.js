@@ -5,6 +5,7 @@ import {
   addNewProducts,
   getParticularProduct,
   updateParticularData,
+  deleteParticularProduct,
 } from "../handler/productHandler.js";
 const productRouter = express.Router();
 
@@ -14,6 +15,7 @@ productRouter.route("/").get(getAllProducts).post(addNewProducts);
 productRouter
   .route("/:id")
   .get(getParticularProduct)
-  .patch(updateParticularData);
+  .patch(updateParticularData)
+  .delete(deleteParticularProduct);
 
 export default productRouter;
