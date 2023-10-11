@@ -75,3 +75,37 @@ export const getParticularProduct = async (req, res) => {
     });
   }
 };
+
+export const updateParticularData = async (req, res) => {
+  try {
+    if (Object.keys(req.body).length < 1) {
+      res.status(400);
+      throw new Error("Empty JSON Body");
+    }
+    const product = await Product.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+    if (!product) {
+      res.status(400);
+      throw new Error("Product Not Found");
+    }
+    res.status(200).json({
+      status: "SUCCESS",
+      data: {
+        product,
+      },
+    });
+  } catch (error) {
+    res.json({
+      status: error.message === "Empty JSON Body" ? `FAIL` : `ERROR`,
+      data: {
+        message: error.message,
+      },
+    });
+  }
+};
