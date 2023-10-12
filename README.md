@@ -168,10 +168,8 @@ Response `ERROR`
 - Product Not Found - `404 - Bad Request`
 
 ## License
-
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
 ## Authors
-
-- [@Rukesh Shrestha](https://shrestharukesh.com.np)
+[@Rukesh Shrestha](https://shrestharukesh.com.np)
