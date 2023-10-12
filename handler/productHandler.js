@@ -57,7 +57,7 @@ export const getParticularProduct = async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
     if (!product) {
-      res.status(400);
+      res.status(404);
       throw new Error("Product Not Found");
     }
     res.status(200).json({
@@ -91,7 +91,7 @@ export const updateParticularData = async (req, res) => {
       }
     );
     if (!product) {
-      res.status(400);
+      res.status(404);
       throw new Error("Product Not Found");
     }
     res.status(200).json({
