@@ -62,7 +62,6 @@ After adding the above mention variables. Now you can start the server.
 
 ```
 npm run dev
-
 ```
 
 ## API Reference
