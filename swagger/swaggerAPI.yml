@@ -1,0 +1,462 @@
+openapi: 3.0.0
+info:
+  title: REST-API-CRUD :- Products
+
+  version: 1.0.0
+  description: |
+    This is the simple API documentation for the user authencation system. It is based on the OpenAPI 3.0 specification.
+
+    ## Features
+    ### CRUD for the product
+
+    - Create the new product
+    - Read the particular product and also all product
+    - Update the particular product
+    - Delete the particular product
+
+
+    ## API documentation
+     - Updated on 13 October 2023
+
+     
+    ## Some useful links:
+    - [Product API Repository](https://github.com/rukesh-shrestha/REST-API-CRUD)
+  contact:
+    email: info@shrestharukesh.com.np
+
+  license:
+    name: MIT
+    url: https://github.com/rukesh-shrestha/REST-API-CRUD/blob/main/LICENSE
+
+servers:
+  - url: http://localhost:3000
+    description: Local Server
+
+#tags header of the each api docs
+tags:
+  - name: Product
+    description: CRUD for the product
+
+# api docs path
+paths: # Adding the 'paths' property
+  /api/products:
+    post:
+      summary: Create new product
+      description: Add the new product in the database if not added
+      tags:
+        - Product
+      requestBody:
+        description: Product properties object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+
+        required: true
+      responses:
+        "200":
+          description: New Product Created Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "SUCCESS"
+                  message:
+                    type: string
+                    example: "created"
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: "xiaomi pad 6"
+                          brand:
+                            type: string
+                            example: "xiaomi"
+                          description:
+                            type: string
+                            example: "Xiaomi Pad 6 (8/256 GB) | 11 Inch 144Hz"
+                          price:
+                            type: number
+                            example: 43999
+                          image:
+                            type: string
+                            example: "https://placehold.co/300x200.png"
+                          _id:
+                            type: string
+                            example: "65294a82fe872f19adea3909"
+                          createdAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+                          updatedAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+
+        "401":
+          description: Unautthorized - Product Already Exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Product Already Exist"
+
+    get:
+      tags:
+        - Product
+      summary: Find all data from the database
+      description: Get all the products from the Product Document
+
+      responses:
+        "200":
+          description: New Product Created Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "SUCCESS"
+                  totalproduct:
+                    type: number
+                    example: 1
+                  message:
+                    type: string
+                    example: "created"
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: "xiaomi pad 6"
+                          brand:
+                            type: string
+                            example: "xiaomi"
+                          description:
+                            type: string
+                            example: "Xiaomi Pad 6 (8/256 GB) | 11 Inch 144Hz"
+                          price:
+                            type: number
+                            example: 43999
+                          image:
+                            type: string
+                            example: "https://placehold.co/300x200.png"
+                          _id:
+                            type: string
+                            example: "65294a82fe872f19adea3909"
+                          createdAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+                          updatedAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+
+  /api/products/{productid}:
+    get:
+      tags:
+        - Product
+      summary: Find particular data from the database
+      description: Get all information related to given product ID from the Product Document
+      operationId: getProductById
+      parameters:
+        - name: productid
+          in: path
+          description: ID of product to return
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Fetch the particular data from the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "SUCCESS"
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: "xiaomi pad 6"
+                          brand:
+                            type: string
+                            example: "xiaomi"
+                          description:
+                            type: string
+                            example: "Xiaomi Pad 6 (8/256 GB) | 11 Inch 144Hz"
+                          price:
+                            type: number
+                            example: 43999
+                          image:
+                            type: string
+                            example: "https://placehold.co/300x200.png"
+                          _id:
+                            type: string
+                            example: "65294a82fe872f19adea3909"
+                          createdAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+                          updatedAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+        "404":
+          description: Not Exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Product Not Found"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Request Parameter is not Valid"
+
+    patch:
+      summary: Update particular product
+      description: Update the particular data from the database
+      tags:
+        - Product
+      operationId: updateParticularData
+      parameters:
+        - name: productid
+          in: path
+          description: ID of product to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Product properties object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+
+        required: true
+      responses:
+        "200":
+          description: Update Particular Product Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "SUCCESS"
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: "xiaomi pad 6"
+                          brand:
+                            type: string
+                            example: "xiaomi"
+                          description:
+                            type: string
+                            example: "Xiaomi Pad 6 (8/256 GB) | 11 Inch 144Hz"
+                          price:
+                            type: number
+                            example: 43999
+                          image:
+                            type: string
+                            example: "https://placehold.co/300x200.png"
+                          _id:
+                            type: string
+                            example: "65294a82fe872f19adea3909"
+                          createdAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+                          updatedAt:
+                            type: string
+                            example: "2023-10-13T13:47:46.854Z"
+
+        "404":
+          description: Not Found - Product Not  Exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Product Not Found"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Empty JSON Body"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Request Parameter is not Valid"
+    delete:
+      summary: Parmanently remove the  particular product
+      description: Delete the particular data from the database
+      tags:
+        - Product
+      operationId: deleteParticularProduct
+      parameters:
+        - name: productid
+          in: path
+          description: ID of product to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Remove Product Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "SUCCESS"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Deleted"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Request Parameter is not Valid"
+        "404":
+          description: Not Found - Product Not  Exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "FAIL"
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Product Not Found"
+
+# api model schema
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - name
+        - brand
+        - description
+        - price
+
+      properties:
+        name:
+          type: string
+          example: "xiaomi pad 6"
+        brand:
+          type: string
+          example: "xiaomi"
+        description:
+          type: string
+          example: "Xiaomi Pad 6 (8/256 GB) | 11 Inch 144Hz"
+        price:
+          type: number
+          example: 43999
+        image:
+          type: string
+          example: "https://placehold.co/300x200.png"
+#
